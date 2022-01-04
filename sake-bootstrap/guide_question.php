@@ -1,6 +1,27 @@
 <?php require __DIR__ . '\parts\__connect_db.php';
-$title = "選酒指南";
-$pageName = "guide_list";
+$title = "選酒指南問題";
+$pageName = "guide_question_list";
+?>
+<?php
+
+$perPage = 10;
+$page = isset($_GET['page']) ? interval($_GET['page']) : 1;
+if ($page < 1) {
+    header('Location: guide_question.php');
+    exit;
+}
+$t_sql = "SELECT COUNT(1) FROM guide_q";
+// 總比數
+$totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
+$totalPages = ceil($totalRows / $perPage);
+if ($page > $totalPages) {
+    header('Location: guide_question.php?page=' . $totalPages);
+    exit;
+}
+
+$sql = sprintf("SELECT * FROM guide_q ORDER BY q_id LIMIT %s, %s");
+$rows = $pdo->query($sql)->fetchAll()
+
 ?>
 
 <?php include __DIR__ . '\parts\__head.php' ?>
@@ -12,6 +33,7 @@ $pageName = "guide_list";
 
 <div class="d-flex justify-content-between mt-5">
     <button type="button" class="btn btn-secondary btn-sm">刪除選擇項目</button>
+    <!--這邊是頁數的 Btn  -->
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
@@ -21,8 +43,8 @@ $pageName = "guide_list";
                 <a class="page-link" href="#"><i class="fas fa-angle-left"></i></a>
             </li>
             <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <!-- <li class="page-item"><a class="page-link" href="#">2</a></li> -->
+            <!-- <li class="page-item"><a class="page-link" href="#">3</a></li> -->
             <li class="page-item">
                 <a class="page-link" href="#"><i class="fas fa-angle-right"></i></a>
             </li>
@@ -32,6 +54,7 @@ $pageName = "guide_list";
         </ul>
     </nav>
 </div>
+<!-- 這邊是 table的內容 -->
 <div class="table-responsive">
     <table class="table table-striped table-sm">
         <thead>
