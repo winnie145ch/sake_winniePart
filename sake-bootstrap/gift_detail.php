@@ -1,26 +1,26 @@
 <?php require __DIR__ . '\parts\__connect_db.php';
-$title = "選酒指南問題";
-$pageName = "guide_question_list";
+$title = "禮盒細節";
+$pageName = "gift_detail_list";
 ?>
 
 <?php
 
-$perPage = 5;
+$perPage = 10;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
-    header('Location: guide_question.php');
+    header('Location: gift_detail.php');
     exit;
 }
-$t_sql = "SELECT COUNT(1) FROM guide_q";
+$t_sql = "SELECT COUNT(1) FROM product_gift_d";
 // 總比數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 $totalPages = ceil($totalRows / $perPage);
 if ($page > $totalPages) {
-    header('Location: guide_question.php?page=' . $totalPages);
+    header('Location: gift_detail.php?page=' . $totalPages);
     exit;
 }
 
-$sql = sprintf("SELECT * FROM guide_q ORDER BY q_id LIMIT %s, %s",($page-1)*$perPage, $perPage);
+$sql = sprintf("SELECT * FROM product_gift_d ORDER BY gift_d_id LIMIT %s, %s",($page-1)*$perPage, $perPage);
 $rows = $pdo->query($sql)->fetchAll()
 
 ?>
@@ -69,9 +69,10 @@ $rows = $pdo->query($sql)->fetchAll()
                     <a href="#"><i class="fas fa-trash"></i></a>
                 </th>
                 <th>id</th>
-                <th>指南種類</th>
-                <th>序號</th>
-                <th>問題</th>
+                <th>禮盒種類</th>
+                <th>圖片</th>
+                <th>禮盒顏色</th>
+                <th>對應商品編號</th>
                 <th>
                     <a href="#"><i class="fas fa-pen"></i></a>
                 </th>
@@ -86,10 +87,11 @@ $rows = $pdo->query($sql)->fetchAll()
                 <td>
                     <a href="#"><i class="fas fa-trash"></i></a>
                 </td>
-                <td><?= $r['q_id'] ?></td>
-                <td><?= $r['q_cate'] ?></td>
-                <td><?= $r['q_seq'] ?></td>
-                <td><?= htmlentities($r['q_des']) ?></td>
+                <td><?= $r['gift_d_id'] ?></td>
+                <td><?= $r['gift_id'] ?></td>
+                <td><img src="./img/gift/<?= $r['gift_img'] ?>" alt="" class="giftimg" style="width:15%"></td>
+                <td><?= $r['box_color'] ?></td>
+                <td><?= $r['gift_pro'] ?></td>
                 <td>
                     <a href="#"><i class="fas fa-pen"></i></a>
                 </td>
@@ -98,7 +100,6 @@ $rows = $pdo->query($sql)->fetchAll()
         </tbody>
     </table>
 </div>
-
 
 <?php include __DIR__ . '\parts\__main_end.html' ?>
 
