@@ -20,7 +20,7 @@ if ($page > $totalPages) {
     exit;
 }
 
-$sql = sprintf("SELECT * FROM product_gift_d ORDER BY gift_d_id LIMIT %s, %s",($page-1)*$perPage, $perPage);
+$sql = sprintf("SELECT * FROM product_gift_d ORDER BY gift_d_id LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
 $rows = $pdo->query($sql)->fetchAll()
 
 ?>
@@ -40,16 +40,15 @@ $rows = $pdo->query($sql)->fetchAll()
             <li class="page-item">
                 <a class="page-link" href="#"><i class="fas fa-angle-double-left"></i></a>
             </li>
-            <li class="page-item <?= 1==$page ? 'disabled' : ''?>">
-                <a class="page-link" href="?page=<?= $page-1 ?>"><i class="fas fa-angle-left"></i></a>
+            <li class="page-item <?= 1 == $page ? 'disabled' : '' ?>">
+                <a class="page-link" href="?page=<?= $page - 1 ?>"><i class="fas fa-angle-left"></i></a>
             </li>
-            <?php for($i=$page-2; $i<=$page+2; $i++) 
-            if($i>=1 && $i<=$totalPages): ?>
-            <li class="page-item <?= $i==$page ? 'active' : ''?>"><a class="page-link"
-                    href="?page=<?= $i ?>"><?= $i ?></a></li>
+            <?php for ($i = $page - 2; $i <= $page + 2; $i++)
+                if ($i >= 1 && $i <= $totalPages) : ?>
+                <li class="page-item <?= $i == $page ? 'active' : '' ?>"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
             <?php endif; ?>
-            <li class="page-item <?= $totalPages==$page ? 'disabled' : ''?>">
-                <a class="page-link" href="?page=<?= $page+1 ?>""><i class=" fas fa-angle-right"></i></a>
+            <li class="page-item <?= $totalPages == $page ? 'disabled' : '' ?>">
+                <a class="page-link" href="?page=<?= $page + 1 ?>""><i class=" fas fa-angle-right"></i></a>
             </li>
             <li class="page-item">
                 <a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a>
@@ -79,23 +78,23 @@ $rows = $pdo->query($sql)->fetchAll()
             </tr>
         </thead>
         <tbody>
-            <?php foreach($rows as $r): ?>
-            <tr>
-                <td>
-                    <input class="form-check-input" type="checkbox" value="" />
-                </td>
-                <td>
-                    <a href="#"><i class="fas fa-trash"></i></a>
-                </td>
-                <td><?= $r['gift_d_id'] ?></td>
-                <td><?= $r['gift_id'] ?></td>
-                <td><img src="./img/gift/<?= $r['gift_img'] ?>" alt="" class="giftimg" style="width:15%"></td>
-                <td><?= $r['box_color'] ?></td>
-                <td><?= $r['gift_pro'] ?></td>
-                <td>
-                    <a href="#"><i class="fas fa-pen"></i></a>
-                </td>
-            </tr>
+            <?php foreach ($rows as $r) : ?>
+                <tr>
+                    <td>
+                        <input class="form-check-input" type="checkbox" value="" />
+                    </td>
+                    <td>
+                        <a href="#"><i class="fas fa-trash"></i></a>
+                    </td>
+                    <td><?= $r['gift_d_id'] ?></td>
+                    <td><?= $r['gift_id'] ?></td>
+                    <td><img src="./img/gift/<?= $r['gift_img'] ?>" alt="" class="gift-img" style="height:20vh;"></td>
+                    <td><?= $r['box_color'] ?></td>
+                    <td><?= $r['gift_pro'] ?></td>
+                    <td>
+                        <a href="#"><i class="fas fa-pen"></i></a>
+                    </td>
+                </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
@@ -109,7 +108,7 @@ $rows = $pdo->query($sql)->fetchAll()
 <?php include __DIR__ . '\parts\__script.html' ?>
 <!-- 如果要 modal 的話留下面的 script -->
 <script>
-const modal = new bootstrap.Modal(document.querySelector('#exampleModal'));
-//  modal.show() 讓 modal 跳出
+    const modal = new bootstrap.Modal(document.querySelector('#exampleModal'));
+    //  modal.show() 讓 modal 跳出
 </script>
 <?php include __DIR__ . '\parts\__foot.html' ?>
