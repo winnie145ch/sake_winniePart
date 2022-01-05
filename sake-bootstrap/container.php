@@ -1,6 +1,6 @@
 <?php require __DIR__ . '\parts\__connect_db.php';
-$title = "選酒指南問題";
-$pageName = "guide_question_list";
+$title = "禮盒酒器";
+$pageName = "container_list";
 ?>
 
 <?php
@@ -8,19 +8,19 @@ $pageName = "guide_question_list";
 $perPage = 5;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
-    header('Location: guide_question.php');
+    header('Location: container.php');
     exit;
 }
-$t_sql = "SELECT COUNT(1) FROM guide_q";
+$t_sql = "SELECT COUNT(1) FROM product_container";
 // 總比數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 $totalPages = ceil($totalRows / $perPage);
 if ($page > $totalPages) {
-    header('Location: guide_question.php?page=' . $totalPages);
+    header('Location: container.php?page=' . $totalPages);
     exit;
 }
 
-$sql = sprintf("SELECT * FROM guide_q ORDER BY q_id LIMIT %s, %s",($page-1)*$perPage, $perPage);
+$sql = sprintf("SELECT * FROM product_container ORDER BY container_id LIMIT %s, %s",($page-1)*$perPage, $perPage);
 $rows = $pdo->query($sql)->fetchAll()
 
 ?>
@@ -73,9 +73,8 @@ $rows = $pdo->query($sql)->fetchAll()
                     <a href="#"><i class="fas fa-trash"></i></a>
                 </th>
                 <th>id</th>
-                <th>指南種類</th>
-                <th>序號</th>
-                <th>問題</th>
+                <th>圖片</th>
+                <th>酒器名稱</th>
                 <th>
                     <a href="#"><i class="fas fa-pen"></i></a>
                 </th>
@@ -90,10 +89,9 @@ $rows = $pdo->query($sql)->fetchAll()
                 <td>
                     <a href="#"><i class="fas fa-trash"></i></a>
                 </td>
-                <td><?= $r['q_id'] ?></td>
-                <td><?= $r['q_cate'] ?></td>
-                <td><?= $r['q_seq'] ?></td>
-                <td><?= htmlentities($r['q_des']) ?></td>
+                <td><?= $r['container_id'] ?></td>
+                <td><img src="./img/container/<?= $r['container_img'] ?>" alt="" class="container-img" style="height: 15vh;"></td>
+                <td><?= htmlentities($r['container_name']) ?></td>
                 <td>
                     <a href="#"><i class="fas fa-pen"></i></a>
                 </td>

@@ -37,9 +37,11 @@ $rows = $pdo->query($sql)->fetchAll()
     <!--這邊是頁數的 Btn  -->
     <nav aria-label="Page navigation example">
         <ul class="pagination">
+            <!-- 跳到最前面的 Btn -->
             <li class="page-item">
                 <a class="page-link" href="#"><i class="fas fa-angle-double-left"></i></a>
             </li>
+            <!-- 往前一頁的 Btn -->
             <li class="page-item <?= 1 == $page ? 'disabled' : '' ?>">
                 <a class="page-link" href="?page=<?= $page - 1 ?>"><i class="fas fa-angle-left"></i></a>
             </li>
@@ -47,9 +49,11 @@ $rows = $pdo->query($sql)->fetchAll()
                 if ($i >= 1 && $i <= $totalPages) : ?>
                 <li class="page-item <?= $i == $page ? 'active' : '' ?>"><a class="page-link" href="?page=<?= $i ?>"><?= $i ?></a></li>
             <?php endif; ?>
+            <!-- 往後一頁的 Btn -->
             <li class="page-item <?= $totalPages == $page ? 'disabled' : '' ?>">
                 <a class="page-link" href="?page=<?= $page + 1 ?>""><i class=" fas fa-angle-right"></i></a>
             </li>
+            <!-- 跳到最後面的 Btn -->
             <li class="page-item">
                 <a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a>
             </li>
