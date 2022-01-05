@@ -38,8 +38,8 @@ $rows = $pdo->query($sql)->fetchAll()
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <!-- 跳到最前面的 Btn -->
-            <li class="page-item">
-                <a class="page-link" href="#"><i class="fas fa-angle-double-left"></i></a>
+            <li class="page-item <?= 1 == $page ? 'disabled' : '' ?>">
+                <a class="page-link" href="?page=<?= $page==1 ?>"><i class="fas fa-angle-double-left"></i></a>
             </li>
             <!-- 往前一頁的 Btn -->
             <li class="page-item <?= 1 == $page ? 'disabled' : '' ?>">
@@ -54,8 +54,8 @@ $rows = $pdo->query($sql)->fetchAll()
                 <a class="page-link" href="?page=<?= $page + 1 ?>""><i class=" fas fa-angle-right"></i></a>
             </li>
             <!-- 跳到最後面的 Btn -->
-            <li class="page-item">
-                <a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a>
+            <li class="page-item <?= $totalPages == $page ? 'disabled' : '' ?>">
+                <a class="page-link" href="?page=<?= $page=$totalPages ?>"><i class="fas fa-angle-double-right"></i></a>
             </li>
         </ul>
     </nav>

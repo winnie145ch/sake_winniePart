@@ -33,13 +33,16 @@ $rows = $pdo->query($sql)->fetchAll()
 <!-- 主要的內容放在 __main_start 與 __main_end 之間 -->
 
 <div class="d-flex justify-content-between mt-5">
-    <button type="button" class="btn btn-secondary btn-sm">刪除選擇項目</button>
+    <div >
+        <button type="button" class="btn btn-secondary btn-sm">刪除選擇項目</button>
+        <button type="button" class="btn btn-secondary btn-sm"><a href="./container_insert.php" style="color:#fff; text-decoration: none;">新增酒器資料</a></button>
+    </div>
     <!--這邊是頁數的 Btn  -->
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <!-- 跳到最前面的 Btn -->
-            <li class="page-item">
-                <a class="page-link" href="#"><i class="fas fa-angle-double-left"></i></a>
+            <li class="page-item <?= 1==$page ? 'disabled' : ''?>">
+                <a class="page-link" href="?page=<?= $page==1 ?>"><i class="fas fa-angle-double-left"></i></a>
             </li>
             <!-- 往前一頁的 Btn -->
             <li class="page-item <?= 1==$page ? 'disabled' : ''?>">
@@ -55,8 +58,8 @@ $rows = $pdo->query($sql)->fetchAll()
                 <a class="page-link" href="?page=<?= $page+1 ?>""><i class=" fas fa-angle-right"></i></a>
             </li>
             <!-- 跳到最後面的 Btn -->
-            <li class="page-item">
-                <a class="page-link" href="#"><i class="fas fa-angle-double-right"></i></a>
+            <li class="page-item <?= $totalPages==$page ? 'disabled' : ''?>" >
+                <a class="page-link" href="?page=<?= $page=$totalPages ?>"><i class="fas fa-angle-double-right"></i></a>
             </li>
         </ul>
     </nav>
@@ -74,6 +77,7 @@ $rows = $pdo->query($sql)->fetchAll()
                 </th>
                 <th>id</th>
                 <th>圖片</th>
+                <th>禮盒圖片</th>
                 <th>酒器名稱</th>
                 <th>
                     <a href="#"><i class="fas fa-pen"></i></a>
@@ -91,6 +95,7 @@ $rows = $pdo->query($sql)->fetchAll()
                 </td>
                 <td><?= $r['container_id'] ?></td>
                 <td><img src="./img/container/<?= $r['container_img'] ?>" alt="" class="container-img" style="height: 15vh;"></td>
+                <td><img src="./img/container/<?= $r['container_shadow'] ?>" alt="" class="container-img" style="height: 15vh;"></td>
                 <td><?= htmlentities($r['container_name']) ?></td>
                 <td>
                     <a href="#"><i class="fas fa-pen"></i></a>
