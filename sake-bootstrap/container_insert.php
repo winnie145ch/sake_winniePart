@@ -25,10 +25,10 @@ $pageName = 'insert_container';
                                 id="containerName"
                                 placeholder="純錫富士山風情杯"
                             />
-                            <div class="alert alert-dark mt-2" role="alert">如果有警告或是備註文字可以用這個～～</div>
+                            <!-- <div class="alert alert-dark mt-2" role="alert">如果有警告或是備註文字可以用這個～～</div> -->
                         </div>
                         <div class="form-group mb-3">
-                            <label for="containerImg" class="mb-2">酒器照片</label>
+                            <label for="containerImg" class="mb-2">酒器圖片</label>
                             <input
                                 type="text"
                                 class="form-control"
@@ -37,12 +37,12 @@ $pageName = 'insert_container';
                             />
                         </div>
                         <div class="form-group mb-3">
-                            <label for="exampleInputPassword1" class="mb-2">我是欄位2</label>
+                            <label for="exampleInputPassword1" class="mb-2">酒器禮盒圖片</label>
                             <input
-                                type="password"
+                                type="text"
                                 class="form-control"
-                                id="exampleInputPassword1"
-                                placeholder="Password"
+                                id="containerShd"
+                                placeholder="Number-s.jpg(檔名+副檔名)"
                             />
                         </div>
                         <div class="d-flex justify-content-center">

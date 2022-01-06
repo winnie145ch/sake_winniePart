@@ -17,14 +17,14 @@ $pageName = 'guide_question_insert';
                     <form name="form_q" onsubmit="sendData(); return false;">
                         <div class="form-group mb-3">
                             <label for="q_cate" class="mb-2">指南種類</label>
-                            <input type="text" class="form-control" id="q_cate" placeholder="a" />
-                            <div class="text"></div>
-                            <!-- <div class="alert alert-dark mt-2" role="alert">如果有警告或是備註文字可以用這個～～</div> -->
+                            <input type="text" class="form-control" id="q_cate" placeholder="a" name="q_cate" />
+                            <div class="form-text"></div>
+                            <!-- <div class="alert alert-dark mt-2" role="alert"></div> -->
                         </div>
                         <div class="form-group mb-3">
                             <label for="q_seq" class="mb-2">問題序號</label>
-                            <input type="number" class="form-control" id="q_seq" placeholder="1" />
-                            <div class="text"></div>
+                            <input type="number" class="form-control" id="q_seq" placeholder="1" name="q_seq" />
+                            <div class="form-text"></div>
                         </div>
                         <div class="form-group mb-3">
                             <label for="q_des" class="mb-2">問題</label>
@@ -69,23 +69,23 @@ $pageName = 'guide_question_insert';
     const modal = new bootstrap.Modal(document.querySelector('#exampleModal'));
     //  modal.show() 讓 modal 跳出
     function sendData() {
-        // cate.nextElementSibling.innerHTML = '';
-        // seq.nextElementSibling.innerHTML = '';
-        // des.nextElementSibling.innerHTML = '';
+        cate.nextElementSibling.innerHTML = '';
+        seq.nextElementSibling.innerHTML = '';
+        des.nextElementSibling.innerHTML = '';
         let isPass = true;
 
-        // if (cate.value.length > 2) {
-        //     isPass = false;
-        //     cate.nextElementSibling.innerHTML = '請輸入正確指南種類';
-        // }
-        // if (seq.value < 1) {
-        //     isPass = false;
-        //     seq.nextElementSibling.innerHTML = '請輸入正確問題序號';
-        // }
-        // if (des.value.length < 5) {
-        //     isPass = false;
-        //     des.nextElementSibling.innerHTML = '請輸入正確的指南問題';
-        // }
+        if (cate.value.length > 2) {
+            isPass = false;
+            cate.nextElementSibling.innerHTML = '請輸入正確指南種類';
+        }
+        if (seq.value < 1) {
+            isPass = false;
+            seq.nextElementSibling.innerHTML = '請輸入正確問題序號';
+        }
+        if (des.value.length < 5) {
+            isPass = false;
+            des.nextElementSibling.innerHTML = '請輸入正確的指南問題';
+        }
 
         if (isPass) {
             const fd = new FormData(document.form_q);

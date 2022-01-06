@@ -39,3 +39,4 @@ $output['success'] = $stmt->rowCount()==1;
 $output['rowCount'] = $stmt->rowCount();
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
+?>
