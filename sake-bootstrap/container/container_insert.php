@@ -1,14 +1,14 @@
-<?php require __DIR__ . '/parts/__connect_db.php';
+<?php require __DIR__ . '.\..\parts\__connect_db.php';
 
 $title = '新增酒器資料';
 $pageName = 'insert_container';
 ?>
 
-<?php include __DIR__ . '/parts/__head.php'?>
-<?php include __DIR__ . '/parts/__navbar.html'?>
-<?php include __DIR__ . '/parts/__sidebar.html'?>
+<?php include __DIR__ . '.\..\parts\__head.php'?>
+<?php include __DIR__ . '.\..\parts\__navbar.html'?>
+<?php include __DIR__ . '.\..\parts\__sidebar.html'?>
 
-<?php include __DIR__ . '/parts/__main_start.html'?>
+<?php include __DIR__ . '.\..\parts\__main_start.html'?>
 
 <div class="mt-5">
     <div class="row justify-content-center">
@@ -56,15 +56,15 @@ $pageName = 'insert_container';
 </div>
 
 
-<?php include __DIR__ . '/parts/__main_end.html'?>
+<?php include __DIR__ . '.\..\parts\__main_end.html'?>
 
 <!-- 如果要 modal 的話留下面的結構 -->
-<?php include __DIR__ . '/parts/__modal.html'?>
+<?php include __DIR__ . '.\..\parts\__modal.html'?>
 
-<?php include __DIR__ . '/parts/__script.html'?>
+<?php include __DIR__ . '.\..\parts\__script.html'?>
 <!-- 如果要 modal 的話留下面的 script -->
 <script>
      const modal = new bootstrap.Modal(document.querySelector('#exampleModal'));
     //  modal.show() 讓 modal 跳出
 </script>
-<?php include __DIR__ . '/parts/__foot.html'?>
+<?php include __DIR__ . '.\..\parts\__foot.html'?>

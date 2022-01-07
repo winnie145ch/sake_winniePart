@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/parts/__connect_db.php';
+<?php require __DIR__ . '.\..\parts\__connect_db.php';
 $title = "禮盒酒器";
 $pageName = "container_list";
 ?>
@@ -25,11 +25,11 @@ $rows = $pdo->query($sql)->fetchAll()
 
 ?>
 
-<?php include __DIR__ . '/parts/__head.php' ?>
-<?php include __DIR__ . '/parts/__navbar.html' ?>
-<?php include __DIR__ . '/parts/__sidebar.html' ?>
+<?php include __DIR__ . '.\..\parts\__head.php' ?>
+<?php include __DIR__ . '.\..\parts\__navbar.html' ?>
+<?php include __DIR__ . '.\..\parts\__sidebar.html' ?>
 
-<?php include __DIR__ . '/parts/__main_start.html' ?>
+<?php include __DIR__ . '.\..\parts\__main_start.html' ?>
 <!-- 主要的內容放在 __main_start 與 __main_end 之間 -->
 
 <div class="d-flex justify-content-between mt-5">
@@ -107,15 +107,15 @@ $rows = $pdo->query($sql)->fetchAll()
 </div>
 
 
-<?php include __DIR__ . '/parts/__main_end.html' ?>
+<?php include __DIR__ . '.\..\parts\__main_end.html' ?>
 
 <!-- 如果要 modal 的話留下面的結構 -->
-<?php include __DIR__ . '/parts/__modal.html' ?>
+<?php include __DIR__ . '.\..\parts\__modal.html' ?>
 
-<?php include __DIR__ . '/parts/__script.html' ?>
+<?php include __DIR__ . '.\..\parts\__script.html' ?>
 <!-- 如果要 modal 的話留下面的 script -->
 <script>
 const modal = new bootstrap.Modal(document.querySelector('#exampleModal'));
 //  modal.show() 讓 modal 跳出
 </script>
-<?php include __DIR__ . '/parts/__foot.html' ?>
+<?php include __DIR__ . '.\..\parts\__foot.html' ?>

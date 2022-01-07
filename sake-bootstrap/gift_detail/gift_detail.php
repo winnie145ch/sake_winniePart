@@ -1,41 +1,41 @@
-<?php require __DIR__ . '/parts/__connect_db.php';
-$title = "選酒指南問題";
-$pageName = "guide_question_list";
+<?php require __DIR__ . '.\..\parts\__connect_db.php';
+$title = "禮盒細節";
+$pageName = "gift_detail_list";
 ?>
 
 <?php
 
-$perPage = 5;
+$perPage = 10;
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 if ($page < 1) {
-    header('Location: guide_question.php');
+    header('Location: gift_detail.php');
     exit;
 }
-$t_sql = "SELECT COUNT(1) FROM guide_q";
+$t_sql = "SELECT COUNT(1) FROM product_gift_d";
 // 總比數
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 $totalPages = ceil($totalRows / $perPage);
 if ($page > $totalPages) {
-    header('Location: guide_question.php?page=' . $totalPages);
+    header('Location: gift_detail.php?page=' . $totalPages);
     exit;
 }
 
-$sql = sprintf("SELECT * FROM guide_q ORDER BY q_id LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+$sql = sprintf("SELECT * FROM product_gift_d ORDER BY gift_d_id LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
 $rows = $pdo->query($sql)->fetchAll()
 
 ?>
 
-<?php include __DIR__ . '/parts/__head.php' ?>
-<?php include __DIR__ . '/parts/__navbar.html' ?>
-<?php include __DIR__ . '/parts/__sidebar.html' ?>
+<?php include __DIR__ . '.\..\parts\__head.php' ?>
+<?php include __DIR__ . '.\..\parts\__navbar.html' ?>
+<?php include __DIR__ . '.\..\parts\__sidebar.html' ?>
 
-<?php include __DIR__ . '/parts/__main_start.html' ?>
+<?php include __DIR__ . '.\..\parts\__main_start.html' ?>
 <!-- 主要的內容放在 __main_start 與 __main_end 之間 -->
 
 <div class="d-flex justify-content-between mt-5">
     <div>
         <button type="button" class="btn btn-secondary btn-sm">刪除選擇項目</button>
-        <button type="button" class="btn btn-secondary btn-sm"><a href="./guide_question_insert.php" style="color:#fff; text-decoration: none;">新增指南問題</a></button>
+        <button type="button" class="btn btn-secondary btn-sm"><a href="./gift_detail_insert.php" style="color:#fff; text-decoration: none;">新增禮盒資料</a></button>
     </div>
     <!--這邊是頁數的 Btn  -->
     <nav aria-label="Page navigation example">
@@ -68,32 +68,38 @@ $rows = $pdo->query($sql)->fetchAll()
     <table class="table table-striped table-sm">
         <thead>
             <tr>
-                <th class="text-center">
+                <th>
                     <input class="form-check-input" type="checkbox" value="" />
                 </th>
-                <th class="text-center">刪除</th>
-                <th class="text-center">id</th>
-                <th class="text-center">指南種類</th>
-                <th class="text-center">序號</th>
-                <th>問題</th>
-                <th class="text-center">修改</th>
+                <th>
+                    <a href="#"><i class="fas fa-trash"></i></a>
+                </th>
+                <th>id</th>
+                <th>禮盒種類</th>
+                <th>圖片</th>
+                <th>禮盒顏色</th>
+                <th>對應商品編號</th>
+                <th>
+                    <a href="#"><i class="fas fa-pen"></i></a>
+                </th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($rows as $r) : ?>
                 <tr>
-                    <td class="text-center">
-                        <input class="del" type="checkbox" value="" />
+                    <td>
+                        <input class="form-check-input" type="checkbox" value="" />
                     </td>
-                    <td class="text-center">
-                        <a href="javascript: delete_it(<?= $r['q_id']?>)"><i class="fas fa-trash"></i></a>
+                    <td>
+                        <a href="#"><i class="fas fa-trash"></i></a>
                     </td>
-                    <td class="text-center"><?= $r['q_id'] ?></td>
-                    <td class="text-center"><?= $r['q_cate'] ?></td>
-                    <td class="text-center"><?= $r['q_seq'] ?></td>
-                    <td><?= htmlentities($r['q_des']) ?></td>
-                    <td class="text-center">
-                        <a href="guide_question_edit.php?q_id=<?=$r['q_id'] ?>"><i class="fas fa-pen"></i></a>
+                    <td><?= $r['gift_d_id'] ?></td>
+                    <td><?= $r['gift_id'] ?></td>
+                    <td><img src="./img/gift/<?= $r['gift_img'] ?>" alt="" class="gift-img" style="height:20vh;"></td>
+                    <td><?= $r['box_color'] ?></td>
+                    <td><?= $r['gift_pro'] ?></td>
+                    <td>
+                        <a href="#"><i class="fas fa-pen"></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -101,23 +107,15 @@ $rows = $pdo->query($sql)->fetchAll()
     </table>
 </div>
 
-
-<?php include __DIR__ . '/parts/__main_end.html' ?>
+<?php include __DIR__ . '.\..\parts\__main_end.html' ?>
 
 <!-- 如果要 modal 的話留下面的結構 -->
-<?php include __DIR__ . '/parts/__modal.html' ?>
+<?php include __DIR__ . '.\..\parts\__modal.html' ?>
 
-<?php include __DIR__ . '/parts/__script.html' ?>
+<?php include __DIR__ . '.\..\parts\__script.html' ?>
 <!-- 如果要 modal 的話留下面的 script -->
 <script>
     const modal = new bootstrap.Modal(document.querySelector('#exampleModal'));
     //  modal.show() 讓 modal 跳出
 </script>
-<script>
-    function delete_it(q_id){
-        if(confirm(`確定要刪除編號為${q_id}的資料嗎?`)){
-            location.href = `guide_question_delete.php?q_id=${q_id}`;
-        }
-    }
-</script>
-<?php include __DIR__ . '/parts/__foot.html' ?>
+<?php include __DIR__ . '.\..\parts\__foot.html' ?>

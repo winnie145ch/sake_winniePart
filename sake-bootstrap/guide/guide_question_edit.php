@@ -1,38 +1,51 @@
-<?php require __DIR__ . '/parts/__connect_db.php';
-$title = '新增選酒指南問題';
-$pageName = 'guide_question_insert';
-?>
-<?php include __DIR__ . '/parts/__head.php' ?>
-<?php include __DIR__ . '/parts/__navbar.html' ?>
-<?php include __DIR__ . '/parts/__sidebar.html' ?>
+<?php require __DIR__ . '.\..\parts\__connect_db.php';
+$title = '修改指南問題';
+$pageName = 'guide_question_edit';
 
-<?php include __DIR__ . '/parts/__main_start.html' ?>
+if(! isset($_GET['q_id'])){
+    header("Location: guide_question.php");
+    exit;
+}
+
+$q_id = intval($_GET['q_id']);
+$row = $pdo->query("SELECT * FROM `guide_q` WHERE q_id=$q_id")->fetch();
+if (empty($row)){
+    header('Location: guide_question.php');
+    exit;
+}
+?>
+<?php include __DIR__ . '.\..\parts\__head.php' ?>
+<?php include __DIR__ . '.\..\parts\__navbar.html' ?>
+<?php include __DIR__ . '.\..\parts\__sidebar.html' ?>
+
+<?php include __DIR__ . '.\..\parts\__main_start.html' ?>
 
 <div class="mt-5">
     <div class="row justify-content-center">
         <div class="col-8">
             <div class="card">
-                <h5 class="card-header py-3">新增選酒指南</h5>
+                <h5 class="card-header py-3">修改指南問題</h5>
                 <div class="card-body">
                     <form name="form_q" onsubmit="sendData(); return false;">
+                    <input type="hidden" name="q_id" value="<?= $row['q_id'] ?>">
                         <div class="form-group mb-3">
                             <label for="q_cate" class="mb-2">指南種類</label>
-                            <input type="text" class="form-control" id="q_cate" placeholder="a" name="q_cate" />
+                            <input type="text" class="form-control" id="q_cate" name="q_cate" value="<?= $row['q_cate'] ?>" />
                             <div class="form-text"></div>
                             <!-- <div class="alert alert-dark mt-2" role="alert"></div> -->
                         </div>
                         <div class="form-group mb-3">
                             <label for="q_seq" class="mb-2">問題序號</label>
-                            <input type="number" class="form-control" id="q_seq" placeholder="1" name="q_seq" />
+                            <input type="number" class="form-control" id="q_seq" name="q_seq" value="<?= $row['q_seq'] ?>" />
                             <div class="form-text"></div>
                         </div>
                         <div class="form-group mb-3">
                             <label for="q_des" class="mb-2">問題</label>
-                            <textarea name="q_des" id="q_des" class="form-control" cols="30" rows="2" placeholder="您喜歡喝甚麼類型的酒？"></textarea>
+                            <textarea name="q_des" id="q_des" class="form-control" cols="30" rows="2" ><?= $row['q_des'] ?></textarea>
                             <div class="form-text"></div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-secondary w-25">新增</button>
+                            <button type="submit" class="btn btn-secondary w-25">修改</button>
                         </div>
                     </form>
                 </div>
@@ -40,7 +53,7 @@ $pageName = 'guide_question_insert';
         </div>
     </div>
 </div>
-<?php include __DIR__ . '/parts/__main_end.html' ?>
+<?php include __DIR__ . '.\..\parts\__main_end.html' ?>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -59,7 +72,7 @@ $pageName = 'guide_question_insert';
 </div>
 
 
-<?php include __DIR__ . '/parts/__script.html' ?>
+<?php include __DIR__ . '.\..\parts\__script.html' ?>
 <!-- 如果要 modal 的話留下面的 script -->
 <script>
     const cate = document.querySelector('#q_cate');
@@ -88,23 +101,23 @@ $pageName = 'guide_question_insert';
         }
 
         if (isPass) {
-            const fd = new FormData(document.form_q);
+            const fd = new FormData(form_q);
 
-            fetch('guide_question_insert_api.php', {
+            fetch('guide_question_edit_api.php', {
                     method: 'POST',
                     body: fd,
                 }).then(r => r.json())
                 .then(obj => {
                     console.log(obj);
                     if (obj.success) {
-                        alert('新增成功');
+                        alert('修改成功');
                         location.href = 'guide_question.php';
                     } else {
-                        document.querySelector('.modal-body').innerHTML = obj.error || '資料新增發生錯誤';
+                        document.querySelector('.modal-body').innerHTML = obj.error || '資料修改發生錯誤';
                         modal.show();
                     }
                 })
         }
     }
 </script>
-<?php include __DIR__ . '/parts/__foot.html' ?>
+<?php include __DIR__ . '.\..\parts\__foot.html' ?>
