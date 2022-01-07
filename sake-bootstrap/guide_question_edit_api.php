@@ -42,6 +42,7 @@ $stmt->execute([
     $cate,
     $seq,
     $des,
+    $q_id
 ]);
 
 if($stmt->rowCount()==0){

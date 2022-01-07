@@ -90,7 +90,7 @@ $rows = $pdo->query($sql)->fetchAll()
                     <td class="text-center"><?= $r['q_id'] ?></td>
                     <td><?= htmlentities($r['a_item']) ?></td>
                     <td class="text-center">
-                        <a href="guide_answer_edit.php?q_id=<?= $r['a_no'] ?>"><i class="fas fa-pen"></i></a>
+                        <a href="guide_answer_edit.php?a_no=<?= $r['a_no'] ?>"><i class="fas fa-pen"></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>

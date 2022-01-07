@@ -2,6 +2,11 @@
 $title = '修改指南問題';
 $pageName = 'guide_question_edit';
 
+if(! isset($_GET['q_id'])){
+    header("Location: guide_question.php");
+    exit;
+}
+
 $q_id = intval($_GET['q_id']);
 $row = $pdo->query("SELECT * FROM `guide_q` WHERE q_id=$q_id")->fetch();
 if (empty($row)){
@@ -96,7 +101,7 @@ if (empty($row)){
         }
 
         if (isPass) {
-            const fd = new FormData(document.form_q);
+            const fd = new FormData(form_q);
 
             fetch('guide_question_edit_api.php', {
                     method: 'POST',

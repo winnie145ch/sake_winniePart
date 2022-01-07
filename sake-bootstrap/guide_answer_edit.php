@@ -1,6 +1,18 @@
 <?php require __DIR__ . '/parts/__connect_db.php';
-$title = "新增指南答案";
-$pageName = "guide_answer_insert";
+$title = "修改指南答案";
+$pageName = "guide_answer_edit";
+
+if(! isset($_GET['a_no'])){
+    header("Location: guide_answer.php");
+    exit;
+}
+
+$a_no = intval($_GET['a_no']);
+$row = $pdo->query("SELECT * FROM `guide_a` WHERE a_no=$a_no")->fetch();
+if(empty($row)){
+    header('Location: guide_answer.php');
+    exit;
+}
 ?>
 <?php include __DIR__ . '/parts/__head.php' ?>
 <?php include __DIR__ . '/parts/__navbar.html' ?>
@@ -12,22 +24,23 @@ $pageName = "guide_answer_insert";
     <div class="row justify-content-center">
         <div class="col-8">
             <div class="card">
-                <h5 class="card-header py-3">新增指南答案選項</h5>
+                <h5 class="card-header py-3">修改指南答案</h5>
                 <div class="card-body">
                     <form name="form_a" onsubmit="sendData(); return false;">
+                    <input type="hidden" name="a_no" value="<?= $row['a_no'] ?>">
                         <div class="form-group mb-3">
                             <label for="q_id" class="mb-2">對應問題id</label>
-                            <input type="number" class="form-control" id="q_id" placeholder="1" name="q_id" />
+                            <input type="number" class="form-control" id="q_id"  name="q_id" value="<?= ($row['q_id'])?>"/>
                             <div class="form-text"></div>
-                            <!-- <div class="alert alert-dark mt-2" role="alert"></div> -->
                         </div>
+
                         <div class="form-group mb-3">
                             <label for="a_item" class="mb-2">答案選項</label>
-                            <input type="text" class="form-control" id="a_item" placeholder="清酒" name="a_item" />
+                            <input type="text" class="form-control" id="a_item" name="a_item" value="<?= $row['a_item'] ?>" />
                             <div class="form-text"></div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-secondary w-25">新增</button>
+                            <button type="submit" class="btn btn-secondary w-25">修改</button>
                         </div>
                     </form>
                 </div>
@@ -78,17 +91,17 @@ $pageName = "guide_answer_insert";
         if(isPass){
             const fd = new FormData(form_a);
 
-            fetch('guide_anwser_insert_api.php', {
+            fetch('guide_anwser_edit_api.php', {
                 method: 'POST',
                 body: fd,
             }).then(r=>r.json())
             .then(obj => {
                 console.log(obj);
                 if(obj.success){
-                    alert('新增成功');
+                    alert('修改成功');
                     location.href = 'guide_answer.php';
                 } else {
-                    document.querySelector('.modal-body').innerHTML = obj.error || '資料新增發生錯誤';
+                    document.querySelector('.modal-body').innerHTML = obj.error || '資料修改發生錯誤';
                     modal.show();
                 }
             })

@@ -6,6 +6,14 @@ $output = [
     'error' => '',
 ];
 
+$a_no = isset($_POST['a_no']) ? intval($_POST['a_no']) : 0;
+if(empty($a_no)){
+    $output['code'] = 400;
+    $output['error'] = '沒有 id';
+    echo json_encode($output, JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
 $q_id = $_POST['q_id'] ?? '';
 $a_item = $_POST['a_item'] ?? '';
 
@@ -22,16 +30,20 @@ if(empty($a_item)){
     exit;
 }
 
-$sql = "INSERT INTO `guide_a`(`q_id`, `a_item`) VALUES (?,?)";
+$sql = "UPDATE `guide_a` SET`q_id`=?, `a_item`=? WHERE `a_no`=?";
 $stmt= $pdo ->prepare($sql);
 
 $stmt->execute([
     $q_id,
     $a_item,
+    $a_no
 ]);
 
-$output['success'] = $stmt->rowCount()==1;
-$output['rowCount'] = $stmt->rowCount();
+if($stmt->rowCount()==0){
+    $output['error'] = '資料沒有修改';
+} else {
+    $output['success'] =true;
+}
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
 ?>
