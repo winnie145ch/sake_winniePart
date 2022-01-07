@@ -67,34 +67,30 @@ $rows = $pdo->query($sql)->fetchAll()
     <table class="table table-striped table-sm">
         <thead>
             <tr>
-                <th>
+                <th class="text-center">
                     <input class="form-check-input" type="checkbox" value="" />
                 </th>
-                <th>
-                    <a href="#"><i class="fas fa-trash"></i></a>
-                </th>
-                <th>id</th>
-                <th>對應的問題</th>
-                <th>答案選項</th>
-                <th>
-                    <a href="#"><i class="fas fa-pen"></i></a>
-                </th>
+                <th class="text-center">刪除</th>
+                <th class="text-center">id</th>
+                <th class="text-center">對應的問題</th>
+                <th class="text-center">答案選項</th>
+                <th class="text-center">修改</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($rows as $r) : ?>
                 <tr>
-                    <td>
-                        <input class="form-check-input" type="checkbox" value="" />
+                    <td class="text-center">
+                        <input class="del" type="checkbox" value="" />
                     </td>
-                    <td>
-                        <a href="#"><i class="fas fa-trash"></i></a>
+                    <td class="text-center">
+                        <a href="javascript: delete_it(<?= $r['a_no'] ?>)"><i class="fas fa-trash"></i></a>
                     </td>
-                    <td><?= $r['a_no'] ?></td>
-                    <td><?= $r['q_id'] ?></td>
+                    <td class="text-center"><?= $r['a_no'] ?></td>
+                    <td class="text-center"><?= $r['q_id'] ?></td>
                     <td><?= htmlentities($r['a_item']) ?></td>
-                    <td>
-                        <a href="#"><i class="fas fa-pen"></i></a>
+                    <td class="text-center">
+                        <a href="guide_answer_edit.php?q_id=<?= $r['a_no'] ?>"><i class="fas fa-pen"></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -113,5 +109,12 @@ $rows = $pdo->query($sql)->fetchAll()
 <script>
     const modal = new bootstrap.Modal(document.querySelector('#exampleModal'));
     //  modal.show() 讓 modal 跳出
+</script>
+<script>
+    function delete_it(a_no){
+        if(confirm(`確定要刪除編號為${a_no}的資料嗎?`)){
+            location.href = `guide_answer_delete.php?a_no=${a_no}`;
+        }
+    }
 </script>
 <?php include __DIR__ . '/parts/__foot.html' ?>

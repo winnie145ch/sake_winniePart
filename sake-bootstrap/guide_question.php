@@ -68,7 +68,7 @@ $rows = $pdo->query($sql)->fetchAll()
     <table class="table table-striped table-sm">
         <thead>
             <tr>
-                <th>
+                <th class="text-center">
                     <input class="form-check-input" type="checkbox" value="" />
                 </th>
                 <th class="text-center">刪除</th>
@@ -82,7 +82,7 @@ $rows = $pdo->query($sql)->fetchAll()
         <tbody>
             <?php foreach ($rows as $r) : ?>
                 <tr>
-                    <td>
+                    <td class="text-center">
                         <input class="del" type="checkbox" value="" />
                     </td>
                     <td class="text-center">
