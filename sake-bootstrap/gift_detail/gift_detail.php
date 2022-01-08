@@ -95,7 +95,7 @@ $rows = $pdo->query($sql)->fetchAll()
                     </td>
                     <td><?= $r['gift_d_id'] ?></td>
                     <td><?= $r['gift_id'] ?></td>
-                    <td><img src="./img/gift/<?= $r['gift_img'] ?>" alt="" class="gift-img" style="height:20vh;"></td>
+                    <td><img src="../img/gift/<?= $r['gift_img'] ?>" alt="" class="gift-img" style="height:20vh;"></td>
                     <td><?= $r['box_color'] ?></td>
                     <td><?= $r['gift_pro'] ?></td>
                     <td>

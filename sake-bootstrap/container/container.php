@@ -94,8 +94,8 @@ $rows = $pdo->query($sql)->fetchAll()
                     <a href="#"><i class="fas fa-trash"></i></a>
                 </td>
                 <td><?= $r['container_id'] ?></td>
-                <td><img src="./img/container/<?= $r['container_img'] ?>" alt="" class="container-img" style="height: 15vh;"></td>
-                <td><img src="./img/container/<?= $r['container_shadow'] ?>" alt="" class="container-img" style="height: 15vh;"></td>
+                <td><img src="../img/container/<?= $r['container_img'] ?>" alt="" class="container-img" style="height: 15vh;"></td>
+                <td><img src="../img/container/<?= $r['container_shadow'] ?>" alt="" class="container-img" style="height: 15vh;"></td>
                 <td><?= htmlentities($r['container_name']) ?></td>
                 <td>
                     <a href="#"><i class="fas fa-pen"></i></a>

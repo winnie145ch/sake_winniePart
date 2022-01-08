@@ -1,14 +1,14 @@
-<?php require __DIR__ . '.\..\parts\__connect_db.php';
+<?php require __DIR__ . './../parts/__connect_db.php';
 
 $title = '新增酒器資料';
 $pageName = 'insert_container';
 ?>
 
-<?php include __DIR__ . '.\..\parts\__head.php'?>
-<?php include __DIR__ . '.\..\parts\__navbar.html'?>
-<?php include __DIR__ . '.\..\parts\__sidebar.html'?>
+<?php include __DIR__ . './../parts/__head.php'?>
+<?php include __DIR__ . './../parts/__navbar.html'?>
+<?php include __DIR__ . './../parts/__sidebar.html'?>
 
-<?php include __DIR__ . '.\..\parts\__main_start.html'?>
+<?php include __DIR__ . './../parts/__main_start.html'?>
 
 <div class="mt-5">
     <div class="row justify-content-center">
@@ -16,32 +16,39 @@ $pageName = 'insert_container';
             <div class="card">
                 <h5 class="card-header py-3">酒器新增</h5>
                 <div class="card-body">
-                    <form>
+                    <form name="form_c" onsubmit="sendData(); return false;">
                         <div class="form-group mb-3">
-                            <label for="containerName" class="mb-2">酒器名稱</label>
+                            <label for="container_name" class="mb-2">酒器名稱</label>
                             <input
                                 type="text"
                                 class="form-control"
-                                id="containerName"
+                                id="container_name"
+                                name="container_name"
                                 placeholder="純錫富士山風情杯"
                             />
-                            <!-- <div class="alert alert-dark mt-2" role="alert">如果有警告或是備註文字可以用這個～～</div> -->
+
                         </div>
                         <div class="form-group mb-3">
-                            <label for="containerImg" class="mb-2">酒器圖片</label>
+                            <label for="container_img" class="mb-2">酒器圖片</label>
+                            <input type="file" name="myfile01" accept="image/*">
+                            <img src="" id="myimg01">
                             <input
                                 type="text"
                                 class="form-control"
-                                id="containerImg"
+                                id="container_img"
+                                name="container_name"
                                 placeholder="Number-o.jpg(檔名+副檔名)"
                             />
                         </div>
                         <div class="form-group mb-3">
-                            <label for="exampleInputPassword1" class="mb-2">酒器禮盒圖片</label>
+                            <label for="container_shadow" class="mb-2">酒器禮盒圖片</label>
+                            <input type="file" name="myfile02" accept="image/*">
+                            <img src="" id="myimg02">
                             <input
                                 type="text"
                                 class="form-control"
-                                id="containerShd"
+                                id="container_shadow"
+                                name="container_shadow"
                                 placeholder="Number-s.jpg(檔名+副檔名)"
                             />
                         </div>
@@ -56,15 +63,81 @@ $pageName = 'insert_container';
 </div>
 
 
-<?php include __DIR__ . '.\..\parts\__main_end.html'?>
+<?php include __DIR__ . './../parts/__main_end.html'?>
 
-<!-- 如果要 modal 的話留下面的結構 -->
-<?php include __DIR__ . '.\..\parts\__modal.html'?>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">資料錯誤</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">...</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">確認</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<?php include __DIR__ . '.\..\parts\__script.html'?>
+<?php include __DIR__ . './../parts/__script.html'?>
 <!-- 如果要 modal 的話留下面的 script -->
 <script>
-     const modal = new bootstrap.Modal(document.querySelector('#exampleModal'));
+    const containerName = document.querySelector('#container_name');
+    const myImg01 = document.querySelector('#myimg01');
+    const containerImg = document.querySelector('#container_img');
+    const myImg02 = document.querySelector('#myimg02');
+    const containerShd = document.querySelector('#container_shadow');
+
+    const modal = new bootstrap.Modal(document.querySelector('#exampleModal'));
     //  modal.show() 讓 modal 跳出
+
+    function sendData(){
+        containerName.nextElementSibling.innerHTML = '';
+        containerImg.nextElementSibling.innerHTML = '';
+        containerShd.nextElementSibling.innerHTML = '';
+        let isPass = true;
+
+        if(containerName.value < 2){
+            isPass = false;
+            containerName.nextElementSibling.innerHTML = '請輸入正確的酒器名稱';
+        }
+        if(empty(myImg01)){
+            isPass = false;
+            containerImg.nextElementSibling.innerHTML = '請上傳酒器圖片';
+        }
+        if(containerImg.value.length < 2){
+            isPass = false;
+            containerImg.nextElementSibling.innerHTML = '請輸入正確的答案選項';
+        }
+        if(empty(myImg02)){
+            isPass = false;
+            containerShd.nextElementSibling.innerHTML = '請上傳酒器禮盒圖片';
+        }
+        if(containerShd.value.length < 2){
+            isPass = false;
+            containerShd.nextElementSibling.innerHTML = '請輸入正確的答案選項';
+        }
+
+        if(isPass){
+            const fd = new FormData(form_C);
+
+            fetch('container_insert_api.php', {
+                method: 'POST',
+                body: fd,
+            }).then(r=>r.json())
+            .then(obj => {
+                console.log(obj);
+                if(obj.success){
+                    alert('新增成功');
+                    location.href = 'container.php';
+                } else {
+                    document.querySelector('.modal-body').innerHTML = obj.error || '資料新增發生錯誤';
+                    modal.show();
+                }
+            })
+        }
+    }
 </script>
-<?php include __DIR__ . '.\..\parts\__foot.html'?>
+<?php include __DIR__ . './../parts/__foot.html'?>
