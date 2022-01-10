@@ -1,4 +1,4 @@
-<?php require __DIR__ . '\..parts\__connect_db.php';
+<?php require __DIR__ . '.\..\parts\__connect_db.php';
 
 header('Content-Type: application/json');
 
@@ -51,8 +51,6 @@ if (!empty($_FILES['gift_img'])) {
     $ext = $exts[$_FILES['gift_img']['type']]; //拿到對應的副檔名
 
     if (!empty($ext)) {
-
-        //$filename = sha1($_FILES['gift_img']['name'] . rand()) . $ext;
         $filename = $_FILES['gift_img']['name']. $ext;
         $output['ext'] = $ext;
         $target = $upload_folder . "\\" . $filename;

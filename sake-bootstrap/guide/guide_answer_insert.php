@@ -1,12 +1,12 @@
-<?php require __DIR__ . '\..parts\__connect_db.php';
+<?php require __DIR__ . '.\..\parts\__connect_db.php';
 $title = "新增指南答案";
 $pageName = "guide_answer_insert";
 ?>
-<?php include __DIR__ . '\..parts\__head.php' ?>
-<?php include __DIR__ . '\..\parts\__navbar.php'?>
-<?php include __DIR__ . '\..parts\__sidebar.html' ?>
+<?php include __DIR__ . '.\..\parts\__head.php' ?>
+<?php include __DIR__ . '.\..\parts\__navbar.php'?>
+<?php include __DIR__ . '.\..\parts\__sidebar.html' ?>
 
-<?php include __DIR__ . '\..parts\__main_start.html' ?>
+<?php include __DIR__ . '.\..\parts\__main_start.html' ?>
 <!-- 主要的內容放在 __main_start 與 __main_end 之間 -->
 <div class="mt-5">
     <div class="row justify-content-center">
@@ -34,7 +34,7 @@ $pageName = "guide_answer_insert";
         </div>
     </div>
 </div>
-<?php include __DIR__ . '\..parts\__main_end.html' ?>
+<?php include __DIR__ . '.\..\parts\__main_end.html' ?>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -52,7 +52,7 @@ $pageName = "guide_answer_insert";
     </div>
 </div>
 
-<?php include __DIR__ . '\..parts\__script.html' ?>
+<?php include __DIR__ . '.\..\parts\__script.html' ?>
 <!-- 如果要 modal 的話留下面的 script -->
 <script>
     const qId = document.querySelector('#q_id');
@@ -95,4 +95,4 @@ $pageName = "guide_answer_insert";
         }
     }
 </script>
-<?php include __DIR__ . '\..parts\__foot.html' ?>
+<?php include __DIR__ . '.\..\parts\__foot.html' ?>

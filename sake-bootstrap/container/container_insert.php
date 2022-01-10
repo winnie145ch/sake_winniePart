@@ -1,14 +1,14 @@
-<?php require __DIR__ . '\..parts\__connect_db.php';
+<?php require __DIR__ . '.\..\parts\__connect_db.php';
 
 $title = '新增酒器資料';
 $pageName = 'insert_container';
 ?>
 
-<?php include __DIR__ . '\..parts\__head.php' ?>
-<?php include __DIR__ . '\..\parts\__navbar.php'?>
-<?php include __DIR__ . '\..parts\__sidebar.html' ?>
+<?php include __DIR__ . '.\..\parts\__head.php' ?>
+<?php include __DIR__ . '.\..\parts\__navbar.php'?>
+<?php include __DIR__ . '.\..\parts\__sidebar.html' ?>
 
-<?php include __DIR__ . '\..parts\__main_start.html' ?>
+<?php include __DIR__ . '.\..\parts\__main_start.html' ?>
 
 <div class="mt-5">
     <div class="row justify-content-center">
@@ -16,7 +16,7 @@ $pageName = 'insert_container';
             <div class="card">
                 <h5 class="card-header py-3">酒器新增</h5>
                 <div class="card-body">
-                    <form name="form_c" onsubmit="sendData(); return false;">
+                    <form name="form_c" onsubmit="sendData(); return false;" method="$_POST">
                         <div class="form-group mb-3">
                             <label for="container_name" class="mb-2">酒器名稱</label>
                             <input type="text" class="form-control" id="container_name" name="container_name" placeholder="純錫富士山風情杯" />
@@ -49,7 +49,7 @@ $pageName = 'insert_container';
 </div>
 
 
-<?php include __DIR__ . '\..parts\__main_end.html' ?>
+<?php include __DIR__ . '.\..\parts\__main_end.html' ?>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -67,7 +67,7 @@ $pageName = 'insert_container';
     </div>
 </div>
 
-<?php include __DIR__ . '\..parts\__script.html' ?>
+<?php include __DIR__ . '.\..\parts\__script.html' ?>
 <!-- 如果要 modal 的話留下面的 script -->
 <script>
     const containerName = document.querySelector('#container_name');
@@ -147,4 +147,4 @@ $pageName = 'insert_container';
         }
     }
 </script>
-<?php include __DIR__ . '\..parts\__foot.html' ?>
+<?php include __DIR__ . '.\..\parts\__foot.html' ?>

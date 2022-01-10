@@ -1,14 +1,7 @@
-<?php require __DIR__ . '\..parts\__connect_db.php';
+<?php require __DIR__ . '.\..\parts\__connect_db.php';
 
 header('Content-Type: application/json');
 
-$upload_folder = __DIR__ . '\..\img\container';
-
-$exts = [
-    'image/jpeg' => '.jpg',
-    'image/png' => '.png',
-    'image/gif' => '.gif'
-];
 $output = [
     'success' => false,
     'code' => 0,
@@ -26,39 +19,40 @@ if (empty($containerName)) {
     exit;
 }
 
+$sql = "INSERT INTO `product_container`(`container_name`) VALUES (?)`";
+$stmt = $pdo->prepare($sql);
+$stmt -> execute([
+    $containerName,
+]);
+
+$output['success'] = $stmt->rowCount() == 1;
+$output['rowCount'] = $stmt->rowCount();
+
+$upload_folder = __DIR__ . '\..\img\container';
+
 $exts = [
     'image/jpeg' => '.jpg',
     'image/png' => '.png',
     'image/gif' => '.gif'
 ];
 
-if (!empty($_FILES['container_img']) && !empty($_FILES['container_shadow'])) {
+if (!empty($_FILES['container_img'])) {
     $ext01 = $exts[$_FILES['container_img']['type']];
-    $ext02 = $exts[$_FILES['container_shadow']['type']];
 
+    if (!empty($ext)) {
+        $filename = $_FILES['container_img']['name'] . $ext;
+        $target = $upload_folder . "\\" . $filename;
 
-    if (!empty($ext01) && !empty($ext02)) {
-        $filename01 = $_FILES['container_img']['name'] . $ext01;
-        $target01 = $upload_folder . "\\" . $filename01;
-        $filename02 = $_FILES['container_shadow']['name'] . $ext02;
-        $target02 = $upload_folder . '/' . $filename02;
+        if (move_uploaded_file($_FILES['container_img']['tmp_name'], $target)) {
 
-        if (move_uploaded_file($_FILES['container_img']['tmp_name'], $target01) && move_uploaded_file($_FILES['container_shadow']['tmp_name'], $target02)) {
-
-            $sql = "INSERT INTO `product_container`(`container_img`,`container_shadow`,`container_name`) VALUES (?,?,?)`";
-            $stmt = $pdo->prepare($sql);
-            $stmt->execute([
-                $filename01,
-                $filename02,
-                $containerName,
+            $sql01 = "INSERT INTO `product_container`(`container_img`) VALUES (?)`";
+            $stmt01 = $pdo->prepare($sql01);
+            $stmt01->execute([
+                $filename,
             ]);
-            $output['success'] = $stmt->rowCount() == 1;
-            $output['rowCount'] = $stmt->rowCount();
-
 
             $output['success'] = true;
-            $output['filename01'] = $filename01;
-            $output['filename02'] = $filename02;
+            $output['filename01'] = $filename;
         } else {
             $output['error'] = '無法移動檔案';
         }
@@ -70,35 +64,32 @@ if (!empty($_FILES['container_img']) && !empty($_FILES['container_shadow'])) {
 }
 
 
-// if(! empty($_FILES['container_shadow'])){
-//     $ext02 = $exts[$_FILES['container_shadow']['type']] ;
+if(! empty($_FILES['container_shadow'])){
+    $ext = $exts[$_FILES['container_shadow']['type']] ;
 
-//     if(! empty($ext02)){
-//         $filename02 = $_FILES['container_shadow']['name'].$ext02;
-//         $target02 = $upload_folder.'/'.$filename02;
+    if(! empty($ext)){
+        $filename = $_FILES['container_shadow']['name'].$ext;
+        $target = $upload_folder."\\".$filename;
 
-//         if(move_uploaded_file($_FILES['container_shadow']['tmp_name'],$target02)){
-//             $output['success'] = true;
-//             $output['filename'] = $filename02;
-//         }else{
-//             $output['error'] = '無法移動檔案';
-//         }
-//     }else{
-//         $output['error'] = '不合法的檔案類型';
-//     }
-// } else {
-//     $output['error'] = '沒有上傳檔案';
-// }
+        if(move_uploaded_file($_FILES['container_shadow']['tmp_name'],$target)){
 
-// $sql = "INSERT INTO `product_container`(`container_img`,`container_shadow`,`container_name`) VALUES (?,?,?)`";
-// $stmt = $pdo->prepare($sql);
-// $stmt -> execute([
-//     $filename01,
-//     $filename02,
-//     $containerName,
-// ]);
+            $sql02 = "INSERT INTO `product_container`(`container_shadow`) VALUES (?)`";
+            $stmt02 = $pdo->prepare($sql02);
+            $stmt02->execute([
+                $filename,
+            ]);
+            $output['success'] = true;
+            $output['filename02'] = $filename;
+        }else{
+            $output['error'] = '無法移動檔案';
+        }
+    }else{
+        $output['error'] = '不合法的檔案類型';
+    }
+} else {
+    $output['error'] = '沒有上傳檔案';
+}
 
-// $output['success'] = $stmt->rowCount() == 1;
-// $output['rowCount'] = $stmt->rowCount();
+
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
