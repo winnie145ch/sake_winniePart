@@ -1,12 +1,12 @@
-<?php require __DIR__ . './../parts/__connect_db.php';
+<?php require __DIR__ . '\..parts\__connect_db.php';
 $title = "新增禮盒資料";
 $pageName = "gift_detail_insert";
 ?>
-<?php include __DIR__ . './../parts/__head.php' ?>
-<?php include __DIR__ . './../parts/__navbar.html' ?>
-<?php include __DIR__ . './../parts/__sidebar.html' ?>
+<?php include __DIR__ . '\..parts\__head.php' ?>
+<?php include __DIR__ . '\..\parts\__navbar.php'?>
+<?php include __DIR__ . '\..parts\__sidebar.html' ?>
 
-<?php include __DIR__ . './../parts/__main_start.html' ?>
+<?php include __DIR__ . '\..parts\__main_start.html' ?>
 <!-- 主要的內容放在 __main_start 與 __main_end 之間 -->
 <div class="mt-5">
     <div class="row justify-content-center">
@@ -51,14 +51,14 @@ $pageName = "gift_detail_insert";
         </div>
     </div>
 </div>
-<?php include __DIR__ . './../parts/__main_end.html' ?>
+<?php include __DIR__ . '\..parts\__main_end.html' ?>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">資料錯誤</h5>
+                <h5 class="modal-title" id="exampleModalLabel">資料新增</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">...</div>
@@ -69,12 +69,11 @@ $pageName = "gift_detail_insert";
     </div>
 </div>
 
-<?php include __DIR__ . './../parts/__script.html' ?>
+<?php include __DIR__ . '\..parts\__script.html' ?>
 <!-- 如果要 modal 的話留下面的 script -->
 <script>
     const giftId = document.querySelector('#gift_id');
     const giftImg = document.querySelector('#gift_img');
-    const imgsDiv = document.querySelector('#imgs');
     const boxColor = document.querySelector('#box_color');
     const giftPro = document.querySelector('#gift_pro');
 
@@ -94,7 +93,6 @@ $pageName = "gift_detail_insert";
     //上傳圖片
     function doUpload() {
         const fd = new FormData(document.form_g);
-        console.log('33');
         fetch("gift_detail_insert_api.php", {
                 method: "POST",
                 body: fd,
@@ -115,10 +113,6 @@ $pageName = "gift_detail_insert";
         giftPro.nextElementSibling.innerHTML = '';
         let isPass = true;
 
-        // if(!giftImg.value){
-        //     isPass = false;
-        //     giftImg.nextElementSibling.innerHTML = '請上傳商品圖片';
-        // }
         if(boxColor.value.length < 2){
             isPass = false;
             boxColor.nextElementSibling.innerHTML = '請輸入正確的禮盒顏色';
@@ -149,4 +143,4 @@ $pageName = "gift_detail_insert";
         }
     }
 </script>
-<?php include __DIR__ . './../parts/__foot.html' ?>
+<?php include __DIR__ . '\..parts\__foot.html' ?>

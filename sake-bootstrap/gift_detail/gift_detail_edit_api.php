@@ -1,4 +1,4 @@
-<?php require __DIR__ . './../parts/__connect_db.php';
+<?php require __DIR__ . '\..parts\__connect_db.php';
 
 header('Content-Type: application/json');
 
@@ -8,6 +8,7 @@ $output = [
     'error' => '',
 ];
 
+$gift_d_id = isset($_POST['gift_d_id']) ? intval($_POST['gift_d_id']) : 0;
 $gift_id = $_POST['gift_id'] ?? '';
 $gift_img = $_POST['gift_img'] ?? '';
 $box_color = $_POST['box_color'] ?? '';
@@ -19,12 +20,12 @@ if (empty($gift_id)) {
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
-if(empty($gift_img)){
-    $output['code'] = 403;
-    $output['error'] = '請上傳正確的圖片';
-    echo json_encode($output, JSON_UNESCAPED_UNICODE);
-    exit;
-}
+// if(empty($gift_img)){
+//     $output['code'] = 403;
+//     $output['error'] = '請上傳正確的圖片';
+//     echo json_encode($output, JSON_UNESCAPED_UNICODE);
+//     exit;
+// }
 if (empty($box_color)) {
     $output['code'] = 405;
     $output['error'] = '請輸入正確的禮盒顏色';
@@ -38,7 +39,7 @@ if (empty($gift_pro)) {
     exit;
 }
 
-$upload_folder = __DIR__ .'\..\img\gift';
+$upload_folder = __DIR__ . '\..\img\gift';
 
 $exts = [
     'image/jpeg' => '.jpg',
@@ -52,34 +53,41 @@ if (!empty($_FILES['gift_img'])) {
 
     if (!empty($ext)) {
 
-        //$filename = sha1($_FILES['gift_img']['name'] . rand()) . $ext;
-        $filename = $_FILES['gift_img']['name']. $ext;
+        $filename = $_FILES['gift_img']['name'] . $ext;
         $output['ext'] = $ext;
         $target = $upload_folder . "\\" . $filename;
 
         if (move_uploaded_file($_FILES['gift_img']['tmp_name'], $target)) {
 
-            $sql = "INSERT INTO `product_gift_d`(
-                `gift_id`,
-                `gift_img`,
-                `box_color`,
-                `gift_pro`
-            ) VALUES (?, ?, ?, ?)";
+            $sql_img = "UPDATE `product_gift_d` SET `gift_img`=? WHERE `gift_d_id`=?";
 
-            $stmt = $pdo->prepare($sql);
+            $sql = "UPDATE `product_gift_d` SET
+            `gift_id`=?,
+            `box_color`=?,
+            `gift_pro`=?
+            WHERE `gift_d_id`=?";
 
-            $stmt->execute([
-                $gift_id,
+            $stmt_img = $pdo->prepare($sql_img);
+
+            $stmt_img->execute([
                 $filename,
-                $box_color,
-                $gift_pro
+                $gift_d_id
+                
             ]);
 
-            $output['success'] = $stmt->rowCount() == 1;
-            $output['rowCount'] = $stmt->rowCount();
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([
+                $gift_id,
+                $box_color,
+                $gift_pro,
+                $gift_d_id
+            ]);
 
-            $output['success'] = true;
-            $output['filename'] = $filename;
+            if ($stmt_img->rowCount() == 0 && $stmt->rowCount() == 0) {
+                $output['error'] = '資料沒有修改';
+            } else {
+                $output['success'] = true;
+            }
         } else {
             $output['error'] = '無法移動檔案';
         }

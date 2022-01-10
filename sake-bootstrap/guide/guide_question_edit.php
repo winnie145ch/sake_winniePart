@@ -1,24 +1,24 @@
-<?php require __DIR__ . './../parts/__connect_db.php';
+<?php require __DIR__ . '\..parts\__connect_db.php';
 $title = '修改指南問題';
 $pageName = 'guide_question_edit';
 
-if(! isset($_GET['q_id'])){
+if (!isset($_GET['q_id'])) {
     header("Location: guide_question.php");
     exit;
 }
 
 $q_id = intval($_GET['q_id']);
 $row = $pdo->query("SELECT * FROM `guide_q` WHERE q_id=$q_id")->fetch();
-if (empty($row)){
+if (empty($row)) {
     header('Location: guide_question.php');
     exit;
 }
 ?>
-<?php include __DIR__ . './../parts/__head.php' ?>
-<?php include __DIR__ . './../parts/__navbar.html' ?>
-<?php include __DIR__ . './../parts/__sidebar.html' ?>
+<?php include __DIR__ . '\..parts\__head.php' ?>
+<?php include __DIR__ . '\..\parts\__navbar.php'?>
+<?php include __DIR__ . '\..parts\__sidebar.html' ?>
 
-<?php include __DIR__ . './../parts/__main_start.html' ?>
+<?php include __DIR__ . '\..parts\__main_start.html' ?>
 
 <div class="mt-5">
     <div class="row justify-content-center">
@@ -27,7 +27,7 @@ if (empty($row)){
                 <h5 class="card-header py-3">修改指南問題</h5>
                 <div class="card-body">
                     <form name="form_q" onsubmit="sendData(); return false;">
-                    <input type="hidden" name="q_id" value="<?= $row['q_id'] ?>">
+                        <input type="hidden" name="q_id" value="<?= $row['q_id'] ?>">
                         <div class="form-group mb-3">
                             <label for="q_cate" class="mb-2">指南種類</label>
                             <input type="text" class="form-control" id="q_cate" name="q_cate" value="<?= $row['q_cate'] ?>" />
@@ -41,7 +41,7 @@ if (empty($row)){
                         </div>
                         <div class="form-group mb-3">
                             <label for="q_des" class="mb-2">問題</label>
-                            <textarea name="q_des" id="q_des" class="form-control" cols="30" rows="2" ><?= $row['q_des'] ?></textarea>
+                            <textarea name="q_des" id="q_des" class="form-control" cols="30" rows="2"><?= $row['q_des'] ?></textarea>
                             <div class="form-text"></div>
                         </div>
                         <div class="d-flex justify-content-center">
@@ -53,14 +53,14 @@ if (empty($row)){
         </div>
     </div>
 </div>
-<?php include __DIR__ . './../parts/__main_end.html' ?>
+<?php include __DIR__ . '\..parts\__main_end.html' ?>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">資料錯誤</h5>
+                <h5 class="modal-title" id="exampleModalLabel">資料修改</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">...</div>
@@ -72,7 +72,7 @@ if (empty($row)){
 </div>
 
 
-<?php include __DIR__ . './../parts/__script.html' ?>
+<?php include __DIR__ . '\..parts\__script.html' ?>
 <!-- 如果要 modal 的話留下面的 script -->
 <script>
     const cate = document.querySelector('#q_cate');
@@ -110,8 +110,10 @@ if (empty($row)){
                 .then(obj => {
                     console.log(obj);
                     if (obj.success) {
+                        document.querySelector('.modal-body').innerHTML = "資料修改成功";
+                        document.querySelector('.modal-footer').innerHTML = `<a href="guide_question.php" class="btn btn-secondary">完成</a>`;
+                        modal.show();
                         alert('修改成功');
-                        location.href = 'guide_question.php';
                     } else {
                         document.querySelector('.modal-body').innerHTML = obj.error || '資料修改發生錯誤';
                         modal.show();
@@ -120,4 +122,4 @@ if (empty($row)){
         }
     }
 </script>
-<?php include __DIR__ . './../parts/__foot.html' ?>
+<?php include __DIR__ . '\..parts\__foot.html' ?>
