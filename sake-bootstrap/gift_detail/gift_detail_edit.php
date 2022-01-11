@@ -94,7 +94,6 @@ if(empty($row)){
     const giftImg = document.querySelector('#gift_img');
     const img_div = document.querySelector('#img_div');
     const d_none = document.querySelector('.d_none');
-    const imgsDiv = document.querySelector('#imgs');
     const boxColor = document.querySelector('#box_color');
     const giftPro = document.querySelector('#gift_pro');
 
