@@ -20,7 +20,7 @@ $pageName = 'insert_container';
                         <div class="form-group mb-3">
                             <label for="container_name" class="mb-2">酒器名稱</label>
                             <input type="text" class="form-control" id="container_name" name="container_name" placeholder="純錫富士山風情杯" />
-
+                            <div class="form-text"></div>
                         </div>
                         <div class="form-group mb-3">
                             <label for="container_img" class="mb-2">酒器圖片</label>
@@ -81,15 +81,14 @@ $pageName = 'insert_container';
 
     //預覽圖片
     containerImg.addEventListener('change', doPreview01);
-
     function doPreview01() {
         const [file] = containerImg.files
         if (file) {
             document.querySelector("#myimg01").src = URL.createObjectURL(file)
         }
     }
-    containerShd.addEventListener('change', doPreview02);
 
+    containerShd.addEventListener('change', doPreview02);
     function doPreview02() {
         const [file] = containerShd.files
         if (file) {
