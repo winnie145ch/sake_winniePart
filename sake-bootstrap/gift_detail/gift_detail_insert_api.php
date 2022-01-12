@@ -13,19 +13,6 @@ $gift_img = $_POST['gift_img'] ?? '';
 $box_color = $_POST['box_color'] ?? '';
 $gift_pro = $_POST['gift_pro'] ?? '';
 
-if (empty($gift_id)) {
-    $output['code'] = 401;
-    $output['error'] = '請輸入正確的對應禮盒種類';
-    echo json_encode($output, JSON_UNESCAPED_UNICODE);
-    exit;
-}
-
-if (empty($box_color)) {
-    $output['code'] = 405;
-    $output['error'] = '請輸入正確的禮盒顏色';
-    echo json_encode($output, JSON_UNESCAPED_UNICODE);
-    exit;
-}
 if (empty($gift_pro)) {
     $output['code'] = 407;
     $output['error'] = '請輸入正確的禮盒商品';

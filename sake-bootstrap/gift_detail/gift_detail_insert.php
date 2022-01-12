@@ -3,7 +3,7 @@ $title = "新增禮盒資料";
 $pageName = "gift_detail_insert";
 ?>
 <?php include __DIR__ . '.\..\parts\__head.php' ?>
-<?php include __DIR__ . '.\..\parts\__navbar.php'?>
+<?php include __DIR__ . '.\..\parts\__navbar.php' ?>
 <?php include __DIR__ . '.\..\parts\__sidebar.html' ?>
 
 <?php include __DIR__ . '.\..\parts\__main_start.html' ?>
@@ -26,15 +26,22 @@ $pageName = "gift_detail_insert";
                         </div>
                         <div class="form-group mb-3">
                             <label for="gift_img" class="mb-2">禮盒圖片</label>
-                            <input type="file" class="form-control" id="gift_img" name="gift_img" accept=".jpg,.jpeg,.png,.gif"/>
+                            <input type="file" class="form-control" id="gift_img" name="gift_img" accept=".jpg,.jpeg,.png,.gif" />
                             <div class="form-text"></div>
                         </div>
-                        <div class="img-div" >
-                            <img src="" id="myimg" style="width: 100%;"/>
+                        <div class="img-div">
+                            <img src="" id="myimg" style="width: 100%;" />
                         </div>
                         <div class="form-group mb-3">
                             <label for="box_color" class="mb-2">禮盒顏色</label>
-                            <input type="text" class="form-control" id="box_color" placeholder="black" name="box_color" />
+                            <select class="form-control" aria-label="Default select example" id="box_color" name="box_color">
+                                <option value="azalea">紫杜鵑色</option>
+                                <option value="black">黑色</option>
+                                <option value="gold">金色</option>
+                                <option value="indigo">靛青色</option>
+                                <option value="red">紅色</option>
+                                <option value="white">白色</option>
+                            </select>
                             <div class="form-text"></div>
                         </div>
                         <div class="form-group mb-3">
@@ -107,39 +114,35 @@ $pageName = "gift_detail_insert";
             });
     }
 
-    function sendData(){
+    function sendData() {
         giftImg.nextElementSibling.innerHTML = '';
         boxColor.nextElementSibling.innerHTML = '';
         giftPro.nextElementSibling.innerHTML = '';
         let isPass = true;
 
-        if(boxColor.value.length < 2){
-            isPass = false;
-            boxColor.nextElementSibling.innerHTML = '請輸入正確的禮盒顏色';
-        }
-        if(giftPro.value.length < 1){
+        if (giftPro.value.length < 1) {
             isPass = false;
             giftPro.nextElementSibling.innerHTML = '請輸入正確的對應商品編號';
         }
 
-        if(isPass){
+        if (isPass) {
             const fd = new FormData(form_g);
 
             fetch('gift_detail_insert_api.php', {
-                method: 'POST',
-                body: fd,
-            }).then(r=>r.json())
-            .then(obj => {
-                console.log(obj);
-                if(obj.success){
-                    document.querySelector('.modal-body').innerHTML = "資料新增成功";
-                    document.querySelector('.modal-footer').innerHTML = `<a href="gift_detail.php" class="btn btn-secondary">完成</a>`;
-                    modal.show();
-                } else {
-                    document.querySelector('.modal-body').innerHTML = obj.error || '資料新增發生錯誤';
-                    modal.show();
-                }
-            })
+                    method: 'POST',
+                    body: fd,
+                }).then(r => r.json())
+                .then(obj => {
+                    console.log(obj);
+                    if (obj.success) {
+                        document.querySelector('.modal-body').innerHTML = "資料新增成功";
+                        document.querySelector('.modal-footer').innerHTML = `<a href="gift_detail.php" class="btn btn-secondary">完成</a>`;
+                        modal.show();
+                    } else {
+                        document.querySelector('.modal-body').innerHTML = obj.error || '資料新增發生錯誤';
+                        modal.show();
+                    }
+                })
         }
     }
 </script>
